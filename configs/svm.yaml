@@ -1,0 +1,22 @@
+# =============================================================================
+# SVM model configuration.
+# Deep-merged on top of default.yaml — only overrides / additions live here.
+# =============================================================================
+
+model:
+  name: "svm"
+  base_params:
+    C: 1.0
+    kernel: "rbf"
+    gamma: "scale"
+    class_weight: "balanced"
+    probability: true
+
+  param_grid:
+    C: [0.1, 1, 10, 100]
+    kernel: ["rbf", "linear"]
+    gamma: ["scale", "auto"]
+
+tuning:
+  scoring: "f1"
+  cv_folds: 5

@@ -1,0 +1,55 @@
+# =============================================================================
+# Default configuration — base settings shared by every model.
+# Model-specific configs (random_forest.yaml, xgboost.yaml, svm.yaml) are
+# deep-merged on top of this file, overriding only what they need to.
+# =============================================================================
+
+project:
+  name: "ml-ensemble-benchmarking"
+  random_state: 42
+
+data:
+  raw_path: null          # null => synthesize a reproducible demo dataset
+  target_column: "target"
+  n_samples: 50000        # used only when synthesizing demo data
+  n_features: 20          # used only when synthesizing demo data
+  test_size: 0.2
+  stratify: true
+
+features:
+  engineering:
+    enabled: true
+    max_interaction_pairs: 10
+    add_polynomial: true
+    add_ratios: true
+    add_statistical_aggregates: true
+  selection:
+    enabled: true
+    method: "importance"   # "importance" or "kbest"
+    k: 20
+    variance_threshold: 0.0
+  imbalance:
+    strategy: "smote"       # "smote", "class_weight", or "none"
+    smote_sampling_strategy: "auto"
+    smote_k_neighbors: 5
+
+tuning:
+  cv_folds: 5
+  scoring: "f1"
+  n_jobs: -1
+  verbose: 1
+
+evaluation:
+  cv_folds: 5
+  metrics:
+    - "accuracy"
+    - "precision"
+    - "recall"
+    - "f1"
+    - "roc_auc"
+
+output:
+  models_dir: "models"
+  reports_dir: "reports"
+  figures_dir: "reports/figures"
+  save_models: true

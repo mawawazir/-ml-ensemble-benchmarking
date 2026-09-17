@@ -1,0 +1,26 @@
+# =============================================================================
+# XGBoost model configuration.
+# Deep-merged on top of default.yaml — only overrides / additions live here.
+# =============================================================================
+
+model:
+  name: "xgboost"
+  base_params:
+    n_estimators: 200
+    max_depth: 6
+    learning_rate: 0.1
+    subsample: 0.9
+    colsample_bytree: 0.9
+    eval_metric: "logloss"
+    n_jobs: -1
+
+  param_grid:
+    n_estimators: [100, 200, 300]
+    max_depth: [3, 6, 9]
+    learning_rate: [0.01, 0.05, 0.1]
+    subsample: [0.8, 0.9, 1.0]
+    colsample_bytree: [0.8, 0.9, 1.0]
+
+tuning:
+  scoring: "f1"
+  cv_folds: 5
